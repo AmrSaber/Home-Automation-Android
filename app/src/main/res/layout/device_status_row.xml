@@ -10,7 +10,7 @@
             android:text="device name"
             android:textSize="18sp"
             android:layout_margin="@dimen/activityMargin"
-            android:textColor="@color/textPrimaryColor"
+            android:textColor="@color/textSecondaryColor"
             android:layout_weight="1"
     />
     <Switch
