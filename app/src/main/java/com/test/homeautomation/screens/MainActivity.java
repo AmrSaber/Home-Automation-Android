@@ -62,6 +62,5 @@ public class MainActivity extends AppCompatActivity {
     public void submit_device(View view) {
         //submit device
         add_device_popup.dismiss_popup();
-
     }
 }
