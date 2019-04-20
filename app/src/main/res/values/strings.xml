@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Home Automation</string>
+    <string name="add_device_button">+</string>
+    <string name="temp_value">20 kelvin</string>
+    <string name="device_name">Device name</string>
+    <string name="pin_id">PIN ID</string>
+    <string name="submit">Submit</string>
+    <string name="add_device">Add device</string>
+    <string name="back">Back</string>
 </resources>
