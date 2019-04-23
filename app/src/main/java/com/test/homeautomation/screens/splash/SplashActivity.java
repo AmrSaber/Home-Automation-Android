@@ -1,10 +1,10 @@
-package com.test.homeautomation.screens;
+package com.test.homeautomation.screens.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import com.test.homeautomation.R;
+import com.test.homeautomation.screens.main.MainActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,6 +12,7 @@ import java.util.TimerTask;
 public class SplashActivity extends AppCompatActivity {
 
     Timer timer = new Timer();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,10 +21,10 @@ public class SplashActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                SplashActivity.this.finish();
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
             }
         }, 2000);
-        this.finish();
     }
 
     @Override

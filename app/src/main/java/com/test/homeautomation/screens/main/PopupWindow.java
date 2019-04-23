@@ -1,4 +1,4 @@
-package com.test.homeautomation.screens;
+package com.test.homeautomation.screens.main;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,7 +30,6 @@ public class PopupWindow extends Activity {
     }
 
     public void show_popup(int x, int y) {
-
         popupWindow.showAtLocation(layout, Gravity.CENTER, x, y);
     }
 
