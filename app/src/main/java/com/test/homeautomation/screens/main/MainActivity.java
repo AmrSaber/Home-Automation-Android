@@ -129,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
 
         add_device_popup.dismiss_popup();
     }
+    public void dismiss_popup(View view){
+        add_device_popup.dismiss_popup();
+    }
 }
 
 
