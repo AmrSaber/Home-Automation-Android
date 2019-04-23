@@ -1,5 +1,6 @@
 package com.test.homeautomation.screens.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,11 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 import com.test.homeautomation.R;
 import com.test.homeautomation.api.ApiUtils;
 import com.test.homeautomation.models.Device;
 import com.test.homeautomation.screens.main.recycler.RecyclerViewAdapter;
+import com.test.homeautomation.screens.splash.SplashActivity;
+import com.test.homeautomation.socket.homeAutomation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,6 +23,8 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,12 +33,25 @@ public class MainActivity extends AppCompatActivity {
     RecyclerViewAdapter adapter;
 
     EditText addedDeviceName, addedDevicePin;
+    private Socket mSocket;
+
+    @Override
+    protected  void onStart(){
+        super.onStart();
+        populateRecycler();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        add_device_popup = new PopupWindow();
+
         setContentView(R.layout.activity_main);
+
+        /*homeAutomation app = (homeAutomation)getApplication();
+        mSocket = app.getmSocket();
+        if (mSocket.connected()){
+            Toast.makeText(MainActivity.this, "Connected!!",Toast.LENGTH_SHORT).show();
+        }*/
 
         addedDeviceName = this.findViewById(R.id.device_name_editText);
         addedDevicePin = this.findViewById(R.id.pin_id_editText);
@@ -83,55 +102,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void add_device_popup(View view) {
+        /*
         add_device_popup.init_popup(this);
         add_device_popup.show_popup(0, 0);
+        */
+        startActivity(new Intent(MainActivity.this, AddDeviceActivity.class));
     }
 
-    public void submit_device(View view) {
-        String deviceName = addedDeviceName.getText().toString();
-        int pin = Integer.parseInt(addedDevicePin.getText().toString());
-
-        Call<Device> add = ApiUtils
-                .getApiService()
-                .addDevice(
-                        deviceName,
-                        pin
-                );
-
-        add.enqueue(new Callback<Device>() {
-            @Override
-            public void onResponse(Call<Device> call, Response<Device> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Error",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                    return;
-                }
 
 
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Device added successfully",
-                        Toast.LENGTH_SHORT
-                ).show();
-                populateRecycler();
-            }
-
-            @Override
-            public void onFailure(Call<Device> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),
-                        "Unable to submit post to API", Toast.LENGTH_SHORT).show();
-                call.cancel();
-            }
-        });
-
-        add_device_popup.dismiss_popup();
-    }
-    public void dismiss_popup(View view){
-        add_device_popup.dismiss_popup();
-    }
 }
 
 
