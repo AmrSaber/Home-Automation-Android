@@ -1,21 +1,21 @@
 package com.test.homeautomation.screens.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
-import com.github.nkzawa.socketio.client.Socket;
 import com.test.homeautomation.R;
 import com.test.homeautomation.api.ApiUtils;
 import com.test.homeautomation.models.Device;
 import com.test.homeautomation.screens.add_device.AddDeviceActivity;
 import com.test.homeautomation.screens.main.recycler.RecyclerViewAdapter;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,11 +26,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<com.test.homeautomation.models.Device> devices = new ArrayList<>();
-    PopupWindow add_device_popup;
     RecyclerViewAdapter adapter;
 
-    EditText addedDeviceName, addedDevicePin;
-    private Socket mSocket;
+    SocketsHelper socketsHelper;
+
+    TextView temperature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +38,25 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        addedDeviceName = this.findViewById(R.id.device_name_editText);
-        addedDevicePin = this.findViewById(R.id.pin_id_editText);
-
         RecyclerView rv = findViewById(R.id.my_recycler_view);
         adapter = new RecyclerViewAdapter(devices);
 
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
+
+        temperature = findViewById(R.id.main_temperature);
+
+        socketsHelper = new SocketsHelper(
+                new Function1<Double, Unit> () {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public Unit invoke(Double newTemperature) {
+                        temperature.setText(newTemperature.toString() + " ℃");
+                        return Unit.INSTANCE;
+                    }
+                }
+        );
+
     }
 
     @Override
@@ -81,8 +92,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, AddDeviceActivity.class));
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socketsHelper.close();
+    }
 }
 
 

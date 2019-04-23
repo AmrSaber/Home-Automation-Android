@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class ApiManager {
 
     private static ApiService instance = null;
-    private static final String BASE_URL = "http://192.168.43.17:3000/";
+    public static final String BASE_URL = "http://192.168.43.17:3000/";
 
     private ApiManager() {}
 
