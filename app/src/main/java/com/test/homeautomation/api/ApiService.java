@@ -1,6 +1,8 @@
 package com.test.homeautomation.api;
 
 import com.test.homeautomation.models.Device;
+import com.test.homeautomation.models.requests.AddDeviceRequest;
+import com.test.homeautomation.models.requests.UpdateStateRequest;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -18,10 +20,10 @@ public interface ApiService {
     Call<Float> getTempreture();
 
     @POST("devices")
-    Call<Device> addDevice(@Field("name") String name, @Field("pin") int pin);
+    Call<Device> addDevice(@Body AddDeviceRequest request);
 
     @PATCH("devices/{id}")
-    Call<Device> updateState(@Path("id") int id, @Field("state") int state);
+    Call<Device> updateState(@Path("id") int id, @Body UpdateStateRequest request);
 
     @DELETE("devices/{id}")
     Call<Device> deleteDevice(@Path("id") int id);

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools" package="com.test.homeautomation">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application android:allowBackup="true"
                  android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher"
@@ -23,7 +25,8 @@
         <activity android:name=".screens.main.MainActivity"
                   android:screenOrientation="portrait"
                   android:label="@string/app_name"/>
-        <activity android:name=".screens.main.AddDeviceActivity"
+
+        <activity android:name=".screens.add_device.AddDeviceActivity"
                   android:screenOrientation="portrait"
                   android:label="@string/app_name"/>
     </application>

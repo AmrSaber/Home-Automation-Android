@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.test.homeautomation.R;
 import com.test.homeautomation.api.ApiUtils;
 import com.test.homeautomation.models.Device;
+import com.test.homeautomation.models.requests.UpdateStateRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,30 +39,29 @@ public class ViewHolder extends RecyclerView.ViewHolder {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int newState = isChecked ? 1 : 0;
                 Call<Device> updateDevice = ApiUtils.getApiService()
-                        .updateState(currentDevice.id, newState);
+                        .updateState(currentDevice.id, new UpdateStateRequest(newState));
                 updateDevice.enqueue(new Callback<Device>() {
                     @Override
                     public void onResponse(Call<Device> call, Response<Device> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(
-                                    ViewHolder.this.itemView.getContext(),
-                                    "Could not update device " + currentDevice.name,
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                            onFail();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Device> call, Throwable t) {
-                        Toast.makeText(
-                                ViewHolder.this.itemView.getContext(),
-                                "Could not update device " + currentDevice.name,
-                                Toast.LENGTH_SHORT
-                        ).show();
+                        onFail();
                     }
                 });
             }
         });
+    }
 
+    private void onFail() {
+        Toast.makeText(
+                ViewHolder.this.itemView.getContext(),
+                "Could not update device " + currentDevice.name,
+                Toast.LENGTH_SHORT
+        ).show();
     }
 }
