@@ -1,6 +1,7 @@
 package com.test.homeautomation.api;
 
 import com.test.homeautomation.models.Device;
+import com.test.homeautomation.models.TemperatureResponse;
 import com.test.homeautomation.models.requests.AddDeviceRequest;
 import com.test.homeautomation.models.requests.UpdateStateRequest;
 import retrofit2.Call;
@@ -17,7 +18,7 @@ public interface ApiService {
     Call<Device> getDevice(@Path("id") int id);
 
     @GET("temperature")
-    Call<Float> getTempreture();
+    Call<TemperatureResponse> getTemperature();
 
     @POST("devices")
     Call<Device> addDevice(@Body AddDeviceRequest request);

@@ -41,18 +41,27 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/main_refresh"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_heading"/>
+            app:layout_constraintTop_toBottomOf="@+id/main_heading"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
     <Button
-            android:id="@+id/add_device_button"
+            android:id="@+id/main_add_device"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/round_button"
@@ -62,7 +71,6 @@
             android:layout_marginEnd="@dimen/activityMargin"
             android:layout_marginBottom="@dimen/activityMargin"
             android:textColor="@color/textSecondaryColor"
-            android:onClick="add_device_popup"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
     />
