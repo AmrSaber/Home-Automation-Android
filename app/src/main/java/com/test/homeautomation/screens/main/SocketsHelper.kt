@@ -1,14 +1,9 @@
 package com.test.homeautomation.screens.main
 
-import android.app.Activity
-import android.content.Context
-import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.test.homeautomation.api.ApiManager
 import org.json.JSONObject
-
-import java.net.URISyntaxException
 
 class SocketsHelper(
     temperatureCallback: (Double)->Unit
